@@ -1,0 +1,2 @@
+austin,aderrickson@colum.edu,369665
+bob,bsmith@colum.edu,123456
