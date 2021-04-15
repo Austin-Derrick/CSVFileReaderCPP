@@ -10,10 +10,10 @@ int main(){
     
     if (file.is_open())
     {
-        std::string name;
-        while (getline(file, name))
+        std::string person;
+        while (getline(file, person))
         {
-            people.push_back(name);
+            people.push_back(person);
         }
         file.close();
     }
