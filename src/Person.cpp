@@ -7,5 +7,5 @@ Person::Person(std::string id, std::string name, std::string email){
 }
 
 Person::~Person(){
-    
+    delete this;
 }
