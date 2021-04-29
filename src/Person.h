@@ -14,5 +14,4 @@ public:
     std::string Email;
     Person(std::string id, std::string firstName, std::string lastName, std::string email);
     Person(std::vector<std::string> personInfo);
-    ~Person();
 };

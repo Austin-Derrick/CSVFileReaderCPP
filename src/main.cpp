@@ -8,46 +8,70 @@
 #include <vector>
 #include <cstdlib>
 
+void checkRowItem(std::string lineInfo){
+    if (lineInfo == ""){
+
+    }
+    
+                // {
+                //     badData = true;
+                //     break;
+                // }
+                // else
+                // {
+                //     tempPerson.push_back(lineInfo);
+                // }
+}
+
 int main(){
 
-    //School* mcSchool =  new School();
+    School* mcSchool =  new School();
 
     std::vector<std::vector<std::string> > people;
+
     std::ifstream file;
     bool badData = false;
     file.open("../src/sample.csv");
+
+    std::vector<std::string> tempPerson;
+    std::string person;
+    std::string lineInfo;
+
+    // general rule
+    //if variaable lives longer than the method that allocates it
+    // move semantics
+    // std::move
+    // IRC c++ 
+    // play with move memory addresses
+    // minimize copying
+    // looking at main method and check where you are doing the work
 
     if (file.is_open())
     {
         while (file.good())
         {
-            std::string person;
             getline(file, person);
 
             std::stringstream s(person);
 
-            std::vector<std::string> tempPerson;
             while (s.good())
             {
-                std::string lineInfo;
                 getline(s, lineInfo, ',');
-                if (lineInfo == "")
-                {
-                    badData = true;
-                    break;
-                }
-                else
-                {
-                    tempPerson.push_back(lineInfo);
-                }
+                
+                //lineInfo = "";
+                //tempPerson.clear();
             }
-            if(badData){
+            if(badData)
+            {
                 continue;
             }
-            else{
+            else
+            {
                 people.push_back(tempPerson);
                 badData = false;
+                tempPerson.clear();
             }
+            //person = "";
         }
         file.close();
     }
@@ -55,24 +79,20 @@ int main(){
     {
         std::cout<<"File is closed or file not found"<<std::endl;
     }
-    
-    file.close();
 
-    // for (int i = 0; i < people.size(); i++)
-    // {
-    //     for (int j = 0; j < 4; j++)
-    //     {
-    //         std::cout<<people[i][j]<<std::endl;
-    //     }
-        
-    // }
-    //std::cout<<people.size()<<std::endl;
+    for (int i = 0; i < people.size(); i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            std::cout<<people[i][j]<<std::endl;
+        }
+    }
+    std::cout<<people.size()<<std::endl;
     
-    ///mcSchool->LoadStudents(people);
-    // mcSchool->PrintStudents();
-    //mcSchool->~School();
+    mcSchool->LoadStudents(people);
+    mcSchool->PrintStudents();
     
-    
+    delete mcSchool;
     
     // while(file.is_open())
     // {
