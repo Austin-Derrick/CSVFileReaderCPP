@@ -10,14 +10,12 @@
 
 int main(){
 
-    // Person person = Person(1, "Austin", "Cake");
-    
-    School school = School();
+    //School* mcSchool =  new School();
 
-    std::vector<std::vector<std::string>> people;
+    std::vector<std::vector<std::string> > people;
     std::ifstream file;
-
-    file.open("../src/people.csv");
+    bool badData = false;
+    file.open("../src/sample.csv");
 
     if (file.is_open())
     {
@@ -25,6 +23,7 @@ int main(){
         {
             std::string person;
             getline(file, person);
+
             std::stringstream s(person);
 
             std::vector<std::string> tempPerson;
@@ -32,12 +31,46 @@ int main(){
             {
                 std::string lineInfo;
                 getline(s, lineInfo, ',');
-                tempPerson.push_back(lineInfo);
+                if (lineInfo == "")
+                {
+                    badData = true;
+                    break;
+                }
+                else
+                {
+                    tempPerson.push_back(lineInfo);
+                }
             }
-            people.push_back(tempPerson);
+            if(badData){
+                continue;
+            }
+            else{
+                people.push_back(tempPerson);
+                badData = false;
+            }
         }
         file.close();
     }
+    else
+    {
+        std::cout<<"File is closed or file not found"<<std::endl;
+    }
+    
+    file.close();
+
+    // for (int i = 0; i < people.size(); i++)
+    // {
+    //     for (int j = 0; j < 4; j++)
+    //     {
+    //         std::cout<<people[i][j]<<std::endl;
+    //     }
+        
+    // }
+    //std::cout<<people.size()<<std::endl;
+    
+    ///mcSchool->LoadStudents(people);
+    // mcSchool->PrintStudents();
+    //mcSchool->~School();
     
     
     
@@ -56,12 +89,12 @@ int main(){
     // for (int i = 0; i < people.size(); i++)
     // {
     //     size_t start = 0;
-    //     size_t end = people[i].find(' ');
+    //     size_t end = people[i].find(',');
     //     std::string ID = people[i].substr(start, end);
     //     people[i].erase(end, 1);
 
     //     start = end;
-    //     end = people[i].find(' ');
+    //     end = people[i].find(',');
     //     std::string name = people[i].substr(start, end - start);
     //     people[i].erase(end, 1);
 
@@ -72,10 +105,10 @@ int main(){
     //     school.students.push_back(Person(ID, name, email));
     // }
 
-    for (int i = 0; i < school.students.size(); i++)
-    {
-        std::cout<<school.students[i].ID<<std::endl;
-        std::cout<<school.students[i].Name<<std::endl;
-        std::cout<<school.students[i].Email<<std::endl;
-    }
+    // for (int i = 0; i < school.students.size(); i++)
+    // {
+    //     std::cout<<school.students[i].ID<<std::endl;
+    //     std::cout<<school.students[i].Name<<std::endl;
+    //     std::cout<<school.students[i].Email<<std::endl;
+    // }
 }
