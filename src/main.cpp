@@ -8,11 +8,13 @@
 #include <vector>
 #include <cstdlib>
 
-void checkRowItem(std::string lineInfo){
+void checkRowItem(std::string lineInfo, bool badData){
     if (lineInfo == ""){
-
+        badData = false;
     }
-    
+    else{
+        return;
+    }
                 // {
                 //     badData = true;
                 //     break;
@@ -31,12 +33,13 @@ int main(){
 
     std::ifstream file;
     bool badData = false;
-    file.open("../src/sample.csv");
-
+    file.open("../src/Food_Inspections.csv");
+    //file.open("../src/sample.csv");
+    // Food_Inspections
     std::vector<std::string> tempPerson;
     std::string person;
     std::string lineInfo;
-
+    int count = 0;
     // general rule
     //if variaable lives longer than the method that allocates it
     // move semantics
@@ -53,11 +56,21 @@ int main(){
             getline(file, person);
 
             std::stringstream s(person);
-
             while (s.good())
             {
                 getline(s, lineInfo, ',');
-                
+                checkRowItem(lineInfo, &badData);
+                if (lineInfo == "")
+                {
+                    badData = true;
+                    break;
+                }
+                else
+                {
+                    count++;
+                    //std::cout<<lineInfo<<std::endl;
+                    tempPerson.push_back(lineInfo);
+                }
                 //lineInfo = "";
                 //tempPerson.clear();
             }
@@ -80,17 +93,18 @@ int main(){
         std::cout<<"File is closed or file not found"<<std::endl;
     }
 
-    for (int i = 0; i < people.size(); i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            std::cout<<people[i][j]<<std::endl;
-        }
-    }
-    std::cout<<people.size()<<std::endl;
+    // for (int i = 0; i < people.size(); i++)
+    // {
+    //     for (int j = 0; j < 4; j++)
+    //     {
+    //         std::cout<<people[i][j]<<std::endl;
+    //     }
+    // }
+    // std::cout<<people.size()<<std::endl;
     
     mcSchool->LoadStudents(people);
     mcSchool->PrintStudents();
+    std::cout<<count<<std::endl;
     
     delete mcSchool;
     
