@@ -25,14 +25,14 @@ void checkRowItem(std::string lineInfo){
 
 int main(){
 
-    School* mcSchool =  new School();
-
     std::vector<std::vector<std::string> > people;
 
     std::ifstream file;
     bool badData = false;
     file.open("../src/sample.csv");
-
+    int risk_01 = 0;
+    int risk_02 = 0;
+    int risk_03 = 0;    
     std::vector<std::string> tempPerson;
     std::string person;
     std::string lineInfo;
@@ -51,16 +51,35 @@ int main(){
         while (file.good())
         {
             getline(file, person);
-
+            
             std::stringstream s(person);
 
             while (s.good())
             {
                 getline(s, lineInfo, ',');
-                
-                //lineInfo = "";
+                if (lineInfo == " "){
+                    badData = true;
+                    break;
+                }
+                else{
+                    if (lineInfo == "Risk 1 (High)")
+                    {
+                        risk_01++;
+                    }
+                    else if (lineInfo == "Risk 2 (Medium)")
+                    {
+                        risk_02++;
+                    }
+                    else if (lineInfo == "Risk 3 (Low)")
+                    {
+                        risk_03++;
+                    }
+                    tempPerson.push_back(lineInfo);
+                }   
+                lineInfo = "";
                 //tempPerson.clear();
             }
+
             if(badData)
             {
                 continue;
@@ -80,55 +99,19 @@ int main(){
         std::cout<<"File is closed or file not found"<<std::endl;
     }
 
-    for (int i = 0; i < people.size(); i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            std::cout<<people[i][j]<<std::endl;
-        }
-    }
-    std::cout<<people.size()<<std::endl;
-    
-    mcSchool->LoadStudents(people);
-    mcSchool->PrintStudents();
-    
-    delete mcSchool;
-    
-    // while(file.is_open())
-    // {
-    //     getline(file, line);
-    //     std::string person;
-    //     std::stringstream s(line);
-    //     while (getline(file, person))
-    //     {
-    //         people.push_back(person);
-    //     }
-    //     file.close();
-    // }
-    
     // for (int i = 0; i < people.size(); i++)
     // {
-    //     size_t start = 0;
-    //     size_t end = people[i].find(',');
-    //     std::string ID = people[i].substr(start, end);
-    //     people[i].erase(end, 1);
-
-    //     start = end;
-    //     end = people[i].find(',');
-    //     std::string name = people[i].substr(start, end - start);
-    //     people[i].erase(end, 1);
-
-    //     start = end;
-    //     end = people[i].find("\n");
-    //     std::string email = people[i].substr(start, end);
-
-    //     school.students.push_back(Person(ID, name, email));
+    //     for (int j = 0; j < 4; j++)
+    //     {
+    //         std::cout<<people[i][j]<<std::endl;
+    //     }
     // }
-
-    // for (int i = 0; i < school.students.size(); i++)
-    // {
-    //     std::cout<<school.students[i].ID<<std::endl;
-    //     std::cout<<school.students[i].Name<<std::endl;
-    //     std::cout<<school.students[i].Email<<std::endl;
-    // }
+    std::cout<<risk_01<<std::endl;
+    std::cout<<risk_02<<std::endl;
+    std::cout<<risk_03<<std::endl;
+    
+    // mcSchool->LoadStudents(people);
+    // mcSchool->PrintStudents();
+    
+    //delete mcSchool;
 }
